@@ -1,25 +1,30 @@
 #include "Arduino.h"
 #include "SimpleTimer.h"
 
-SimpleTimer::SimpleTimer(unsigned long interval) {
-  setInterval(interval);
+SimpleTimer::SimpleTimer(float intervalMillis) {
+  setInterval(intervalMillis);
   timer = 0;
 }
 
-unsigned long SimpleTimer::getInterval(void) {
-  return interval;
+float SimpleTimer::getInterval(void) {
+  return intervalMillis;
 }
 
 float SimpleTimer::getIntervalSeconds(void) {
-  return (float)getInterval() / 1000000.0;
+  return (float)getInterval() / 1000.0;
 }
 
-void SimpleTimer::setInterval(unsigned long interval) {
-  this->interval = interval;
+float SimpleTimer::getIntervalMicros(void) {
+  return intervalMicros;
+}
+
+void SimpleTimer::setInterval(float intervalMillis) {
+  this->intervalMillis = intervalMillis;
+  intervalMicros = intervalMillis * 1000;
 }
 
 bool SimpleTimer::check(void) {
-  if (micros() - timer > interval) {
+  if (micros() - timer > intervalMicros) {
     timer = micros();
     return true;
   }

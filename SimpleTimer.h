@@ -3,14 +3,16 @@
 
 class SimpleTimer {
   public:
-    SimpleTimer(unsigned long);
+    SimpleTimer(float);
     bool check(void);
-    void setInterval(unsigned long);
-    unsigned long getInterval(void);
+    void setInterval(float);
+    float getInterval(void);
+    float getIntervalMicros(void);
     float getIntervalSeconds(void);
   private:
-    unsigned long interval;
-    unsigned long timer;
+    float intervalMillis;
+    float intervalMicros;
+    float timer;
 };
 
 #endif
