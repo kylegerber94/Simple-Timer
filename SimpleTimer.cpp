@@ -4,6 +4,27 @@
 SimpleTimer::SimpleTimer(float intervalMillis) {
   setInterval(intervalMillis);
   timer = 0;
+  enabled = false;
+}
+
+void SimpleTimer::disable(void) {
+  enable(false);
+}
+
+void SimpleTimer::enable(void) {
+  enable(true);
+}
+
+void SimpleTimer::enable(bool enable) {
+  enabled = enable;
+}
+
+bool SimpleTimer::isEnabled(void) {
+  return enabled;
+}
+
+void SimpleTimer::reset(void) {
+  timer = micros();
 }
 
 float SimpleTimer::getInterval(void) {
@@ -11,7 +32,7 @@ float SimpleTimer::getInterval(void) {
 }
 
 float SimpleTimer::getIntervalSeconds(void) {
-  return (float)getInterval() / 1000.0;
+  return getInterval() / 1000.0;
 }
 
 float SimpleTimer::getIntervalMicros(void) {
@@ -24,8 +45,8 @@ void SimpleTimer::setInterval(float intervalMillis) {
 }
 
 bool SimpleTimer::check(void) {
-  if (micros() - timer > intervalMicros) {
-    timer = micros();
+  if (enabled && micros() - timer > intervalMicros) {
+    reset();
     return true;
   }
   return false;
